@@ -16,13 +16,13 @@ NOISE_RADIUS = 0.5
 DROP_PROB = 0.1         
 ADD_NEW_STARS = 255       
 
-# ---> THÔNG SỐ MỚI: CƯỜNG ĐỘ SÁNG (INTENSITY) <---
-MIN_INTENSITY = 20.0       # Độ sáng tối thiểu (vd: thang đo 0-255 của pixel)
-MAX_INTENSITY = 250.0      # Độ sáng tối đa
-INTENSITY_NOISE = 15.0     # Mức độ dao động độ sáng giữa 2 frame (nhiễu cảm biến/khí quyển)
+# Cường độ sáng
+MIN_INTENSITY = 20.0       
+MAX_INTENSITY = 250.0      
+INTENSITY_NOISE = 15.0   
 
 # ==========================================
-# 2. HÀM LƯU FILE TXT (Đã cập nhật 3 cột)
+# 2. HÀM TẠO FILE TXT
 # ==========================================
 def save_to_txt(filename, points):
     with open(filename, 'w') as f:
@@ -53,14 +53,11 @@ for x, y, intensity in old_centroids:
         new_x = x + TRUE_SHIFT_X + random.uniform(-NOISE_RADIUS, NOISE_RADIUS)
         new_y = y + TRUE_SHIFT_Y + random.uniform(-NOISE_RADIUS, NOISE_RADIUS)
         
-        # Mô phỏng sự dao động độ sáng ở frame mới
         new_intensity = intensity + random.uniform(-INTENSITY_NOISE, INTENSITY_NOISE)
-        # Giới hạn (clamp) độ sáng để không bị âm hoặc vượt trần
         new_intensity = max(0.0, min(new_intensity, 255.0)) 
         
         new_centroids.append((new_x, new_y, new_intensity))
 
-# Thêm nhiễu/sao mới
 for _ in range(ADD_NEW_STARS):
     x = random.uniform(0, IMAGE_WIDTH)
     y = random.uniform(0, IMAGE_HEIGHT)
@@ -70,6 +67,4 @@ for _ in range(ADD_NEW_STARS):
 random.shuffle(new_centroids)
 save_to_txt("new_centroids.txt", new_centroids)
 
-print("\n--- KẾT QUẢ MONG ĐỢI ---")
 print(f"Pixel Jump Xấp xỉ: dx = {TRUE_SHIFT_X}, dy = {TRUE_SHIFT_Y}")
-print("Mỗi dòng trong file txt nay đã có định dạng: x, y, intensity")
