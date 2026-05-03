@@ -3,7 +3,7 @@ import random
 # ==========================================
 # 1. THIẾT LẬP THÔNG SỐ (PARAMETERS)
 # ==========================================
-NUM_STARS = 3000
+NUM_STARS = 25
 IMAGE_WIDTH = 1920
 IMAGE_HEIGHT = 1080
 
